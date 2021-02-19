@@ -11,9 +11,9 @@ Passgen uses below algorithm to generate passwords for you based on the app/webs
 Password = EncryptionAlgorithm([Website/App] Unique Name + Master Password)
 ```
 
-
 ## Usage
 ```bash
-passgen --master='your master password' g primary-gmail
+passgen generate-config "your master password"
+passgen generate primary-gmail-or-any-unique-name
 ```
 
