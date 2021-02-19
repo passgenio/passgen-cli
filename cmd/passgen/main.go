@@ -1,13 +1,20 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/amirrezaask/passgen"
 	"github.com/spf13/cobra"
 )
 
-var masterPassword string
+type config struct {
+	Master string `json:"master"`
+}
+
+var configPath string
 var algo string
 
 var rootCmd = &cobra.Command{
@@ -24,8 +31,17 @@ var genCmd = &cobra.Command{
 		if len(args) < 1 {
 			panic(args)
 		}
-		p := passgen.NewPassGen([]byte(masterPassword), passgen.NewAlgorithm(algo))
 
+		f, err := os.OpenFile(filepath.Clean(configPath), os.O_CREATE|os.O_RDONLY, 0644)
+		if err != nil {
+			panic(err)
+		}
+		var c config
+		err = json.NewDecoder(f).Decode(&c)
+		if err != nil {
+			panic(err)
+		}
+		p := passgen.NewPassGen([]byte(c.Master), passgen.NewAlgorithm(algo))
 		generated, err := p.GenFor(args[0])
 		if err != nil {
 			panic(err)
@@ -35,7 +51,7 @@ var genCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVar(&masterPassword, "master", "", "Master password")
+	rootCmd.PersistentFlags().StringVar(&configPath, "config", fmt.Sprintf("%s/.passgen.json", os.Getenv("HOME")), "config path that contains your configuration")
 	rootCmd.PersistentFlags().StringVar(&algo, "algo", "aes", "Algorithm to use.")
 	genCmd.Aliases = []string{"generate", "g"}
 	rootCmd.AddCommand(genCmd)
