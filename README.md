@@ -13,6 +13,8 @@ Password = EncryptionAlgorithm([Website/App] Unique Name + Master Password)
 
 ## Usage
 ```bash
+go get github.com/amirrezaask/passgen-cli
+go install github.com/amirrezaask/passgen-cli
 passgen generate-config "your master password"
 passgen generate primary-gmail-or-any-unique-name
 ```

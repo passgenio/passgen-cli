@@ -1,4 +1,4 @@
-module github.com/amirrezaask/passgen
+module github.com/amirrezaask/passgen-cli
 
 go 1.16
 
