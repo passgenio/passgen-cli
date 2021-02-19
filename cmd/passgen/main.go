@@ -77,6 +77,7 @@ var genConfig = &cobra.Command{
 func init() {
 	rootCmd.PersistentFlags().StringVar(&configPath, "config", fmt.Sprintf("%s/.passgen.json", os.Getenv("HOME")), "config path that contains your configuration")
 	genCmd.Aliases = []string{"generate", "g"}
+	genConfig.Aliases = []string{"generate-config", "gc"}
 	rootCmd.AddCommand(genCmd)
 	rootCmd.AddCommand(genConfig)
 }
