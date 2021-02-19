@@ -12,6 +12,7 @@ import (
 
 type config struct {
 	Master string `json:"master"`
+	Algo   string `json:"algo"`
 }
 
 var configPath string
@@ -50,12 +51,34 @@ var genCmd = &cobra.Command{
 	},
 }
 
+var genConfig = &cobra.Command{
+	Use:   `gen-config`,
+	Short: "generate a new config file.",
+	Long:  `generate a new config file.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) < 1 {
+			panic(args)
+		}
+		f, err := os.OpenFile(filepath.Clean(configPath), os.O_CREATE|os.O_RDWR, 0644)
+		if err != nil {
+			panic(err)
+		}
+		var c config
+		c.Algo = "sha"
+		c.Master = args[0]
+		err = json.NewEncoder(f).Encode(&c)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("Your new config is ready at", configPath)
+	},
+}
+
 func init() {
 	rootCmd.PersistentFlags().StringVar(&configPath, "config", fmt.Sprintf("%s/.passgen.json", os.Getenv("HOME")), "config path that contains your configuration")
-	rootCmd.PersistentFlags().StringVar(&algo, "algo", "aes", "Algorithm to use.")
 	genCmd.Aliases = []string{"generate", "g"}
 	rootCmd.AddCommand(genCmd)
-
+	rootCmd.AddCommand(genConfig)
 }
 
 func main() {
