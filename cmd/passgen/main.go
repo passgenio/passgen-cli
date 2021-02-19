@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/amirrezaask/passgen"
+	"github.com/amirrezaask/passgen-cli"
 	"github.com/spf13/cobra"
 )
 
