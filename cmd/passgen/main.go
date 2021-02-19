@@ -12,7 +12,6 @@ var algo string
 
 var rootCmd = &cobra.Command{
 	Use: `passgen`,
-
 	Run: func(cmd *cobra.Command, args []string) {
 	},
 }

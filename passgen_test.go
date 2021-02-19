@@ -10,14 +10,14 @@ import (
 func TestPassGen(t *testing.T) {
 	p := &PassGen{
 		Master:    []byte("master"),
-		Algorithm: &AES{},
+		Algorithm: &SHA512{},
 	}
 	unique := "unique"
 	out1, err := p.GenFor(unique)
 	assert.NoError(t, err)
 
-	out2, err := p.Algorithm.Decrypt(out1, p.Master)
+	out2, err := p.GenFor(unique)
 
 	assert.NoError(t, err)
-	assert.Equal(t, unique, fmt.Sprintf("%x", out2))
+	assert.Equal(t, fmt.Sprintf("%x", out1), fmt.Sprintf("%x", out2))
 }
