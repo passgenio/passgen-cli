@@ -17,7 +17,9 @@ var rootCmd = &cobra.Command{
 }
 
 var genCmd = &cobra.Command{
-	Use: `gen`,
+	Use:   `gen`,
+	Short: "generate a new password for website.",
+	Long:  `generate a new password for website.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) < 1 {
 			panic(args)
