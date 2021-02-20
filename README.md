@@ -8,7 +8,7 @@ a prpoitary software so I created passgen.
 ## How
 Passgen uses below algorithm to generate passwords for you based on the app/website.<br>
 ```
-Password = EncryptionAlgorithm([Website/App] Unique Name + Master Password)
+Password = Hash([Website/App] Unique Name + Master Password)
 ```
 
 ## Usage
